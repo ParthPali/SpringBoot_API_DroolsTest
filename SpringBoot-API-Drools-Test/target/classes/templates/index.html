@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Spring Boot Drools Form Validation</title>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+        $(document).on('submit', '#form', function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/pullapi/getValue",
+                data: '{"type": "' + $(this).find("select").val() + '"}',
+                success: function(data) {
+                    if (data.discount > 0) {
+                        $(".value").html("Discount for selected product is: " + data.discount + "%");
+                    } else {
+                        $(".value").html("Invalid Request!");
+                    }
+                }
+            });
+        });
+</script>
+<form id="form">
+	<table>
+		<tag>
+			<tr>
+				<td>
+    				Select a Product for discount %:
+    			</td>
+    		</tr>
+    		<tr>
+    			<td>
+			        <select name="type">
+			            <option value="diamond">Diamond</option>
+			            <option value="gold">Gold</option>
+			        </select>
+			    </td>
+		    </tr>
+		    <tr>
+			    <td>
+			        <input type="submit" value="Submit">
+			    </td>
+		    </tr>
+	    </tag>
+	    <tr>
+		    <td>
+			    <span class="value"></span>
+    		</td>
+    	</tr>
+    </table>
+</form>
+</body>
+</html>
